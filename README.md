@@ -1,75 +1,67 @@
-# Nuxt Minimal Starter
+![Nuxtjs](https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82)
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+<br>
+<br>
 
-## Setup
+## ⚽ Football Tactics
 
-Make sure to install dependencies:
+Este é um projeto desenvolvido para o projeto integrador do 5º Semestre.
 
+Desenvolvido como uma aplicação de gerenciamento e criação de táticas de futebol, cadastramento de elenco, seleção de formações e integração com Inteligência Artificial.
+
+<br>
+<br>
+
+## 🚀 Tecnologias Utilizadas
+
+Nuxt 3
+
+Vue 3
+
+TailwindCSS
+
+Lucide Vue Next (Ícones)
+
+VueUse (Composables)
+
+<br>
+<br>
+
+## 🛠 Funcionalidades
+
+- Layout completo com Sidebar responsivo
+
+- Adicione seu Elenco de Futebol
+
+- Selecionar Formações para a escalação do seu elenco
+
+- Crie Táticas personalizadas para o treinamento da sua equipe
+
+- Página de Perfil e Logout.
+
+- Design responsivo.
+
+<br>
+
+## 📋 Como Rodar Localmente
+Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/FootballTatics-FrontEnd.git
+  ```
+
+Acesse a pasta do projeto:
 ```bash
-# npm
+cd FootballTatics-FrontEnd
+```
+
+Instale as dependências:
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
+Rode o projeto:
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
