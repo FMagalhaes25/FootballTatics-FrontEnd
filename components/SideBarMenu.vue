@@ -33,18 +33,14 @@
 
         <!-- Footer -->
         <div class="pt-4 border-t border-gray-700">
-          <NuxtLink to="/perfil"
+          <NuxtLink to="/perfil/"
             class="flex items-center px-4 py-3 text-base rounded-lg transition-colors hover:bg-[#16A249]"
             @click="closeSidebarOnMobile">
             <User class="w-6 h-6 mr-3 opacity-70" />
             <span class="text-sm font-medium">Perfil</span>
           </NuxtLink>
 
-          <button @click="logout"
-            class="flex items-center w-full px-4 py-3 text-base rounded-lg bg-[#16A249] hover:bg-[#0f7a36] transition-colors mt-2">
-            <LogOut class="w-6 h-6 mr-3 opacity-70" />
-            <span class="font-medium">Sair</span>
-          </button>
+          <LogoutButton></LogoutButton>
         </div>
 
       </div>
@@ -60,6 +56,7 @@
 import { ref, computed } from 'vue'
 import { useMediaQuery } from '@vueuse/core'
 import { ChevronLeft, LayoutDashboard, Users, Newspaper, NotebookPen, LogOut, User } from 'lucide-vue-next'
+import LogoutButton from '~/components/perfil/LogoutButton.vue'
 
 const props = defineProps({
   isOpen: {
@@ -73,8 +70,8 @@ const emit = defineEmits(['close-sidebar', 'menu-item-click'])
 const isDesktop = useMediaQuery('(min-width: 1024px)')
 
 const menuItems = ref([
-  { to: '/index', name: 'Home', icon: LayoutDashboard },
-  { to: '/elenco', name: 'Elenco', icon: Users },
+  { to: '/', name: 'Home', icon: LayoutDashboard },
+  { to: '/elenco/', name: 'Elenco', icon: Users },
   { to: '/formacoes', name: 'Formações', icon: NotebookPen },
   { to: '/taticas', name: 'Táticas', icon: Newspaper },
 ])
