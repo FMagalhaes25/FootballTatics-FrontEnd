@@ -8,8 +8,8 @@
 
         <!-- Header -->
         <div class="flex items-center mb-6 justify-between">
-          <h1 class="text-2xl text-[#4ADE80] font-bold">FootballTactics</h1>
-          <button @click="toggleSidebar" class="p-2 rounded-full hover:bg-[#4ADE80] transition-colors">
+          <h1 class="text-2xl text-[#4ADE80] font-bold">Football Tactics</h1>
+          <button v-if="isOpen" @click="toggleSidebar" class="p-2 rounded-full hover:bg-[#4ADE80] transition-colors">
             <ChevronLeft class="text-[#4ADE80] w-6 h-6" />
           </button>
         </div>
@@ -67,7 +67,6 @@ const props = defineProps({
 
 const emit = defineEmits(['close-sidebar', 'menu-item-click'])
 
-const isDesktop = useMediaQuery('(min-width: 1024px)')
 
 const menuItems = ref([
   { to: '/', name: 'Home', icon: LayoutDashboard },
