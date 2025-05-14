@@ -80,20 +80,6 @@
             </div>
         </div>
         </div>
-
-        <!-- Seção Mais Informações -->
-        <div class="bg-[#1a1919] rounded-lg shadow-sm border border-[#16A249] p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-white">Elenco</h2>
-                <button 
-                @click="showEditInfoModal = true"
-                class="bg-[#16A249] hover:bg-[#0f7a36] text-white px-4 py-2 rounded-lg transition-colors"
-                >
-                Editar
-                </button>
-            </div>
-        </div>
-
         <!-- Modais -->
         <EditDataModal 
         :is-open="showEditDataModal" 
