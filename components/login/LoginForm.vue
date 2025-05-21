@@ -1,19 +1,15 @@
 <template>
   <div class="w-full max-w-md">
-    <!-- Form Header -->
     <div class="text-center mb-8">
       <h2 class="text-2xl font-bold text-white mb-2">Bem-vindo de volta</h2>
       <p class="text-gray-400">Entre com suas credenciais para acessar sua conta</p>
     </div>
-    
-    <!-- Login Form -->
+
     <form @submit.prevent="handleSubmit" class="space-y-5">
-      <!-- Alert for errors -->
       <div v-if="error" class="bg-red-500 bg-opacity-20 border border-red-500 rounded-lg p-3 text-red-300 text-sm">
         {{ error }}
       </div>
-      
-      <!-- Email Field -->
+
       <div>
         <label for="email" class="block text-sm text-gray-400 mb-1">E-mail</label>
         <div class="relative">
@@ -27,13 +23,10 @@
             autocomplete="email"
             required
             class="w-full bg-[#232323] border border-gray-700 rounded-lg pl-10 pr-3 py-2 text-white focus:border-[#16A249] focus:outline-none focus:ring-1 focus:ring-[#16A249] transition-colors"
-            :class="{ 'border-red-500': validationErrors.email }"
           />
         </div>
-        <p v-if="validationErrors.email" class="mt-1 text-sm text-red-400">{{ validationErrors.email }}</p>
       </div>
-      
-      <!-- Password Field -->
+
       <div>
         <div class="flex justify-between items-center mb-1">
           <label for="password" class="block text-sm text-gray-400">Senha</label>
@@ -56,7 +49,6 @@
             autocomplete="current-password"
             required
             class="w-full bg-[#232323] border border-gray-700 rounded-lg pl-10 pr-10 py-2 text-white focus:border-[#16A249] focus:outline-none focus:ring-1 focus:ring-[#16A249] transition-colors"
-            :class="{ 'border-red-500': validationErrors.password }"
           />
           <button 
             type="button"
@@ -67,10 +59,8 @@
             <EyeOff v-else class="h-5 w-5" />
           </button>
         </div>
-        <p v-if="validationErrors.password" class="mt-1 text-sm text-red-400">{{ validationErrors.password }}</p>
       </div>
-      
-      <!-- Submit Button -->
+
       <button
         type="submit"
         :disabled="loading"
@@ -81,8 +71,7 @@
         <span>{{ loading ? 'Entrando...' : 'Entrar' }}</span>
       </button>
     </form>
-    
-    <!-- Register Link -->
+
     <div class="text-center mt-6">
       <p class="text-gray-400 text-sm">
         Não tem uma conta?
@@ -98,112 +87,73 @@
   </div>
 </template>
 
+
 <script setup>
-import { ref, reactive } from 'vue';
-import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-vue-next';
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-vue-next'
+import { useAuthStore } from '~/stores/auth'
 
-const emit = defineEmits(['login-success', 'login-error', 'switch-to-register', 'forgot-password']);
+const config = useRuntimeConfig()
+const router = useRouter()
+const auth = useAuthStore()
 
-// Form state
+const emit = defineEmits(['login-success', 'login-error'])
+
 const form = reactive({
   email: '',
-  password: '',
-});
-
-// UI state
-const loading = ref(false);
-const error = ref('');
-const showPassword = ref(false);
-const validationErrors = reactive({
-  email: '',
   password: ''
-});
+})
 
-// Validate form
-const validateForm = () => {
-  let isValid = true;
-  validationErrors.email = '';
-  validationErrors.password = '';
-  
-  // Email validation
-  if (!form.email) {
-    validationErrors.email = 'E-mail é obrigatório';
-    isValid = false;
-  } else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
-    validationErrors.email = 'E-mail inválido';
-    isValid = false;
-  }
-  
-  // Password validation
-  if (!form.password) {
-    validationErrors.password = 'Senha é obrigatória';
-    isValid = false;
-  } else if (form.password.length < 6) {
-    validationErrors.password = 'Senha deve ter pelo menos 6 caracteres';
-    isValid = false;
-  }
-  
-  return isValid;
-};
+const showPassword = ref(false)
+const loading = ref(false)
+const error = ref('')
 
-// Handle form submission
 const handleSubmit = async () => {
-  if (!validateForm()) return;
-  
-  loading.value = true;
-  error.value = '';
-  
-  try {
-    // Replace with your actual API call
-    // const response = await fetch(`${apiUrl}/auth/login`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     email: form.email,
-    //     password: form.password
-    //   }),
-    // });
-    
-    // if (!response.ok) {
-    //   const errorData = await response.json();
-    //   throw new Error(errorData.message || 'Falha ao fazer login');
-    // }
-    
-    // const data = await response.json();
-    
-    // Simulate API call for demo
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // For demo purposes, check if email contains "error" to simulate an error
-    if (form.email.includes('error')) {
-      throw new Error('Credenciais inválidas');
-    }
-    
-    // Success - emit event with user data
-    emit('login-success', { 
-      email: form.email,
-      // Include any other user data from the response
-    });
-    
-    // Reset form
-    // form.email = '';
-    // form.password = '';
-    
-  } catch (err) {
-    console.error('Login error:', err);
-    error.value = err.message || 'Ocorreu um erro ao fazer login. Tente novamente.';
-    emit('login-error', err);
-  } finally {
-    loading.value = false;
-  }
-};
+  error.value = ''
+  loading.value = true
 
-// Handle social login
-const socialLogin = (provider) => {
-  // Implement social login logic here
-  console.log(`Social login with ${provider}`);
-  // This would typically redirect to the OAuth provider
-};
+  try {
+    //Chamada de Login
+    const loginRes = await fetch(`${config.public.API_URL}/login/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: form.email,
+        password: form.password
+      })
+    })
+
+    if (!loginRes.ok) {
+      const errText = await loginRes.text()
+      throw new Error(errText || 'Falha no login')
+    }
+
+    const { access } = await loginRes.json()
+
+    // Buscar dados do usuário
+    const meRes = await fetch(`${config.public.API_URL}/me/`, {
+      headers: { Authorization: `Bearer ${access}` }
+    })
+
+    if (!meRes.ok) {
+      throw new Error('Erro ao buscar dados do usuário')
+    }
+
+    const userData = await meRes.json()
+
+    // Armazenar no Pinia
+    auth.login(userData, access)
+
+    // Redirecionar
+    router.push('/')
+
+  } catch (err) {
+    console.error('Login error', err)
+    error.value = 'Email ou senha inválidos'
+    emit('login-error', err)
+  } finally {
+    loading.value = false
+  }
+}
 </script>

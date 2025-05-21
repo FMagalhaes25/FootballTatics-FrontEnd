@@ -33,7 +33,7 @@
 
         <!-- Footer -->
         <div class="pt-4 border-t border-gray-700">
-          <NuxtLink to="/perfil/"
+          <NuxtLink to="/perfil"
             class="flex items-center px-4 py-3 text-base rounded-lg transition-colors hover:bg-[#16A249]"
             @click="closeSidebarOnMobile">
             <User class="w-6 h-6 mr-3 opacity-70" />
@@ -46,7 +46,7 @@
       </div>
     </aside>
 
-    <!-- Overlay apenas no mobile -->
+    <!-- Overlay no mobile -->
     <div v-if="isOpen && !isDesktop" class="fixed inset-0 bg-black opacity-50" @click="toggleSidebar"></div>
   </div>
   
@@ -67,6 +67,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close-sidebar', 'menu-item-click'])
 
+const isDesktop = useMediaQuery('(min-width: 768px)')
 
 const menuItems = ref([
   { to: '/', name: 'Home', icon: LayoutDashboard },

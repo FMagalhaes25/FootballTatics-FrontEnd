@@ -4,7 +4,7 @@
       <div class="p-6">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-xl font-semibold text-white">
-            {{ editMode ? 'Editar Jogador' : 'Adicionar Jogador' }}
+            {{ 'Adicionar Jogador' }}
           </h2>
           <button @click="$emit('close')" class="text-gray-400 hover:text-white">
             <X class="w-6 h-6" />
@@ -20,7 +20,7 @@
               <div>
                 <label class="block text-sm text-gray-400 mb-1">Nome Completo</label>
                 <input 
-                  v-model="form.name" 
+                  v-model="form.nome" 
                   type="text" 
                   class="w-full bg-[#232323] border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#16A249] focus:outline-none"
                   required
@@ -46,28 +46,28 @@
                     class="w-full bg-[#232323] border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#16A249] focus:outline-none"
                     required
                   >
-                    <option value="Goleiro">Goleiro</option>
-                    <option value="Zagueiro">Zagueiro</option>
-                    <option value="Lateral-esquerdo">Lateral Esquerdo</option>
-                    <option value="Lateral-direito">Lateral Direito</option>
-                    <option value="Volante">Volante</option>
-                    <option value="Meia-Central">Meia-Central</option>
-                    <option value="Meia-Atacante">Meia-Atacante</option>
-                    <option value="Ponta-esquerda">Ponta Esquerda</option>
-                    <option value="Ponta-direita">Ponta Direita</option>
-                    <option value="Centroavante">Centroavante</option>
+                    <option value="GOL">Goleiro</option>
+                    <option value="ZAG">Zagueiro</option>
+                    <option value="LE">Lateral Esquerdo</option>
+                    <option value="LD">Lateral Direito</option>
+                    <option value="VOL">Volante</option>
+                    <option value="MC">Meia-Central</option>
+                    <option value="MAT">Meia-Atacante</option>
+                    <option value="PE">Ponta Esquerda</option>
+                    <option value="PD">Ponta Direita</option>
+                    <option value="CA">Centroavante</option>
                   </select>
                 </div>
 
                 <div>
                   <label class="block text-sm text-gray-400 mb-1">Perna Boa</label>
                   <select 
-                    v-model="form.perna" 
+                    v-model="form.perna_boa" 
                     class="w-full bg-[#232323] border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#16A249] focus:outline-none"
                     required
                   >
-                    <option value="Esquerda">Esquerda</option>
-                    <option value="Direita">Direita</option>
+                    <option value="ESQ">Esquerda</option>
+                    <option value="DIR">Direita</option>
                   </select>
                 </div>
               </div>
@@ -118,7 +118,7 @@
               <div>
                 <label class="block text-sm text-gray-400 mb-1">Velocidade (0-10)</label>
                 <input 
-                  v-model.number="form.status.velocidade" 
+                  v-model.number="form.velocidade" 
                   type="number" 
                   min="0"
                   max="10"
@@ -128,7 +128,7 @@
               <div>
                 <label class="block text-sm text-gray-400 mb-1">Chute (0-10)</label>
                 <input 
-                  v-model.number="form.status.chute" 
+                  v-model.number="form.chute" 
                   type="number" 
                   min="0"
                   max="10"
@@ -138,7 +138,7 @@
               <div>
                 <label class="block text-sm text-gray-400 mb-1">Passe (0-10)</label>
                 <input 
-                  v-model.number="form.status.passe" 
+                  v-model.number="form.passe" 
                   type="number" 
                   min="0"
                   max="10"
@@ -148,7 +148,7 @@
               <div>
                 <label class="block text-sm text-gray-400 mb-1">Defesa (0-10)</label>
                 <input 
-                  v-model.number="form.status.defesa" 
+                  v-model.number="form.defesa" 
                   type="number" 
                   min="0"
                   max="10"
@@ -160,7 +160,7 @@
             <div>
               <label class="flex items-center gap-2 text-gray-400">
                 <input 
-                  v-model="form.status.goleiro" 
+                  v-model="form.goleiro" 
                   type="checkbox"
                   class="w-4 h-4 accent-[#16A249]"
                 />
@@ -181,7 +181,7 @@
               type="submit"
               class="bg-[#16A249] hover:bg-[#0f7a36] text-white px-4 py-2 rounded-lg transition-colors"
             >
-              {{ editMode ? 'Salvar Alterações' : 'Adicionar Jogador' }}
+              {{'Adicionar Jogador' }}
             </button>
           </div>
         </form>
@@ -191,77 +191,50 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { User2, X } from 'lucide-vue-next';
+import { ref, watch } from 'vue'
+import { X } from 'lucide-vue-next'
 
 const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    default: false
-  },
-  editMode: {
-    type: Boolean,
-    default: false
-  },
-  playerData: {
-    type: Object,
-    default: () => ({})
-  }
-});
+  isOpen: Boolean
+})
 
-const emit = defineEmits(['close', 'save']);
-
+const emit = defineEmits(['close', 'save'])
 
 const form = ref({
-  name: '',
-  posicao: 'Centroavante',
-  perna: 'Direita',
+  nome: '',
   camisa: 1,
   idade: 25,
   altura: 180,
   peso: 75,
-  status: {
-    velocidade: 5,
-    chute: 5,
-    passe: 5,
-    defesa: 5,
-    goleiro: false
-  }
-});
+  posicao: 'Centroavante',
+  perna_boa: 'DIR',
+  velocidade: 5,
+  chute: 5,
+  passe: 5,
+  defesa: 5,
+  goleiro: false
+})
 
+watch(() => form.value, () => {}, { deep: true })
 
-watch(() => props.playerData, (newValue) => {
-  if (props.editMode && Object.keys(newValue).length > 0) {
+watch(() => props.isOpen, (opened) => {
+  if (!opened) {
     form.value = {
-      ...newValue,
-      status: { ...newValue.status }
-    };
-  }
-}, { immediate: true });
-
-
-watch(() => props.isOpen, (isOpen) => {
-  if (!isOpen && !props.editMode) {
-    form.value = {
-      name: '',
-      posicao: 'Centroavante',
-      perna: 'Direita',
+      nome: '',
       camisa: 1,
       idade: 25,
       altura: 180,
       peso: 75,
-      status: {
-        velocidade: 5,
-        chute: 5,
-        passe: 5,
-        defesa: 5,
-        goleiro: false
-      }
-    };
+      posicao: 'Centroavante',
+      perna_boa: 'DIR',
+      velocidade: 5,
+      chute: 5,
+      passe: 5,
+      defesa: 5,
+      goleiro: false
+    }
   }
-});
+})
 
-const handleSubmit = () => {
-  emit('save', { ...form.value });
-};
+const handleSubmit = () => emit('save', { ...form.value })
 </script>

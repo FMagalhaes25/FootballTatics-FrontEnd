@@ -1,6 +1,7 @@
 <template>
   <NuxtLayout :name="layout">
     <NuxtPage />
+    <Toaster position="top-right" />
   </NuxtLayout>
 </template>
 
