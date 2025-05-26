@@ -1,13 +1,14 @@
 <template>
   <NuxtLayout :name="layout">
     <NuxtPage />
-    <Toaster position="top-right" />
   </NuxtLayout>
+  <Toaster position="top-right" />
 </template>
 
 <script setup>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
+import { Toaster } from 'vue-sonner'
 
 const route = useRoute()
 

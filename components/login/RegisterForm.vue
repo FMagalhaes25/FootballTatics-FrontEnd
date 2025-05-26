@@ -100,19 +100,6 @@
         <p v-if="validationErrors.confirmPassword" class="text-sm text-red-400 mt-1">{{ validationErrors.confirmPassword }}</p>
       </div>
 
-      <div class="flex items-start">
-        <input id="terms" v-model="form.acceptTerms" type="checkbox"
-          class="h-4 w-4 accent-[#16A249] bg-[#232323] border-gray-700 rounded mt-1"
-          :class="{ 'border-red-500': validationErrors.acceptTerms }" />
-        <label for="terms" class="ml-3 text-sm text-gray-400">
-          Eu concordo com os
-          <a href="#" class="text-[#16A249] hover:text-[#0f7a36]">Termos de Serviço</a>
-          e
-          <a href="#" class="text-[#16A249] hover:text-[#0f7a36]">Política de Privacidade</a>
-        </label>
-      </div>
-      <p v-if="validationErrors.acceptTerms" class="text-sm text-red-400 mt-1">{{ validationErrors.acceptTerms }}</p>
-
       <button type="submit" :disabled="loading"
         class="w-full bg-[#16A249] hover:bg-[#0f7a36] text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
         :class="{ 'opacity-70 cursor-not-allowed': loading }">
@@ -136,6 +123,8 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { User, Mail, Phone, Lock, Eye, EyeOff, Loader2, Trophy } from 'lucide-vue-next'
+import { toast } from 'vue-sonner'
+
 
 const emit = defineEmits(['register-success', 'register-error', 'switch-to-login'])
 const config = useRuntimeConfig()
@@ -146,7 +135,6 @@ const form = reactive({
   phone: '',
   password: '',
   confirmPassword: '',
-  acceptTerms: false,
   teamName: ''
 })
 
@@ -161,7 +149,6 @@ const validationErrors = reactive({
   phone: '',
   password: '',
   confirmPassword: '',
-  acceptTerms: '',
   teamName: ''
 })
 
@@ -199,11 +186,6 @@ const validateForm = () => {
     isValid = false
   }
 
-  if (!form.acceptTerms) {
-    validationErrors.acceptTerms = 'Você deve aceitar os termos'
-    isValid = false
-  }
-
   return isValid
 }
 
@@ -229,16 +211,25 @@ const handleSubmit = async () => {
 
     if (!response.ok) {
       const err = await response.json()
-      throw new Error(Object.values(err)[0][0] || 'Erro ao registrar')
+
+      const erroMsg = Object.values(err)[0]?.[0] || 'Erro ao registrar'
+      toast.error(erroMsg)
+      throw new Error(erroMsg)
     }
 
     const data = await response.json()
+    toast.success('Cadastro realizado com sucesso!')
     emit('register-success', data)
+
+    // Limpa formulário
+    Object.keys(form).forEach(key => form[key] = '')
   } catch (err) {
     error.value = err.message
+    toast.error(err.message)
     emit('register-error', err)
   } finally {
     loading.value = false
   }
 }
+
 </script>

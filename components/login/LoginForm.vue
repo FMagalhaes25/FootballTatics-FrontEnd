@@ -148,6 +148,8 @@ const handleSubmit = async () => {
     // Redirecionar
     router.push('/')
 
+    emit('login-success', userData)
+
   } catch (err) {
     console.error('Login error', err)
     error.value = 'Email ou senha inválidos'
