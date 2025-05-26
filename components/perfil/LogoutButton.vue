@@ -9,7 +9,15 @@
 </template>
 
 <script setup>
-import {LogOut} from 'lucide-vue-next'
+import { LogOut } from 'lucide-vue-next'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '~/stores/auth'
 
+const router = useRouter()
+const auth = useAuthStore()
 
+const logout = () => {
+  auth.logout()
+  router.push('/auth')
+}
 </script>

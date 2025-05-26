@@ -130,116 +130,100 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Trophy, CheckCircle, User, ChevronRight, ChevronLeft } from 'lucide-vue-next';
-import LoginForm from '~/components/login/LoginForm.vue';
-import RegisterForm from '~/components/login/RegisterForm.vue';
+import { ref, onMounted } from 'vue'
+import { Trophy, CheckCircle, User, ChevronRight, ChevronLeft, Quote } from 'lucide-vue-next'
+import LoginForm from '~/components/login/LoginForm.vue'
+import RegisterForm from '~/components/login/RegisterForm.vue'
+import { toast } from 'vue-sonner'
 
-const isLogin = ref(true);
+definePageMeta({ layout: 'auth' })
 
-definePageMeta({
-  layout: 'auth',
-});
-
+const isLogin = ref(true)
+const currentQuoteIndex = ref(0)
 
 const quotes = [
   {
     id: 1,
-    text: "O talento ganha jogos, mas trabalho em equipe e inteligência ganham campeonatos.",
-    author: "Di Stefano",
-    role: "Lenda do Futebol"
+    text: 'O talento ganha jogos, mas trabalho em equipe e inteligência ganham campeonatos.',
+    author: 'Di Stefano',
+    role: 'Lenda do Futebol'
   },
   {
     id: 2,
-    text: "A diferença entre o impossível e o possível reside na determinação de uma pessoa.",
-    author: "George Best",
-    role: "Lenda do Futebol"
+    text: 'A diferença entre o impossível e o possível reside na determinação de uma pessoa.',
+    author: 'George Best',
+    role: 'Lenda do Futebol'
   },
   {
     id: 3,
-    text: "O sucesso não é um acidente. É trabalho duro, perseverança, aprendizado e, acima de tudo, amor pelo que você está fazendo.",
-    author: "Pelé",
-    role: "Lenda do Futebol"
+    text: 'O sucesso não é um acidente. É trabalho duro, perseverança, aprendizado e, acima de tudo, amor pelo que você está fazendo.',
+    author: 'Pelé',
+    role: 'Lenda do Futebol'
   },
   {
     id: 4,
-    text: "Você não pode colocar um limite em nada. Quanto mais você sonha, mais longe você chega.",
-    author: "Cristiano Ronaldo",
-    role: "Jogador de Futebol"
+    text: 'Você não pode colocar um limite em nada. Quanto mais você sonha, mais longe você chega.',
+    author: 'Cristiano Ronaldo',
+    role: 'Jogador de Futebol'
   },
   {
     id: 5,
-    text: "A melhor maneira de prever o futuro é criá-lo.",
-    author: "Johan Cruyff",
-    role: "Lenda do Futebol"
+    text: 'A melhor maneira de prever o futuro é criá-lo.',
+    author: 'Johan Cruyff',
+    role: 'Lenda do Futebol'
   },
   {
     id: 6,
-    text: "Não é só o jogo em si. O futebol é uma batalha psicológica, o aspecto humano desempenha um papel significativo",
-    author: "Sócrates",
-    role: "Lenda do Futebol e do Corinthians"
+    text: 'Não é só o jogo em si. O futebol é uma batalha psicológica, o aspecto humano desempenha um papel significativo',
+    author: 'Sócrates',
+    role: 'Lenda do Futebol e do Corinthians'
   }
-];
-
-const currentQuoteIndex = ref(0);
-
+]
 
 const nextQuote = () => {
-  currentQuoteIndex.value = (currentQuoteIndex.value + 1) % quotes.length;
-};
+  currentQuoteIndex.value = (currentQuoteIndex.value + 1) % quotes.length
+}
 
 const prevQuote = () => {
-  currentQuoteIndex.value = (currentQuoteIndex.value - 1 + quotes.length) % quotes.length;
-};
-
-// Auto-rotate quotes
-let quoteInterval;
+  currentQuoteIndex.value = (currentQuoteIndex.value - 1 + quotes.length) % quotes.length
+}
 
 onMounted(() => {
-  quoteInterval = setInterval(() => {
-    nextQuote();
-  }, 10000);
-});
+  setInterval(nextQuote, 10000)
+})
 
-
-// Handle auth events
-const handleLoginSuccess = (userData) => {
-  console.log('Login successful', userData);
-  // Here you would typically:
-  // 1. Store the user data/token in localStorage or a store
-  // 2. Redirect to the dashboard or home page
-  // navigateTo('/dashboard');
-};
+const handleLoginSuccess = () => {
+  toast.success('Login realizado com sucesso!')
+}
 
 const handleLoginError = (error) => {
-  console.error('Login error', error);
-};
+  toast.error('Erro ao fazer login. Verifique os dados.')
+  console.error('Login error', error)
+}
 
-const handleRegisterSuccess = (userData) => {
-  console.log('Registration successful', userData);
-  // Here you would typically:
-  // 1. Show a success message
-  // 2. Automatically log the user in or redirect to login
-  isLogin.value = true;
-};
+const handleRegisterSuccess = () => {
+  toast.success('Cadastro realizado com sucesso! Faça login para continuar.')
+  isLogin.value = true
+}
 
 const handleRegisterError = (error) => {
-  console.error('Registration error', error);
-};
+  toast.error('Erro ao registrar. Verifique os dados.')
+  console.error('Registration error', error)
+}
 
 const handleForgotPassword = () => {
-  console.log('Forgot password');
-  // Implement forgot password logic or navigation
-};
+  toast.info('Funcionalidade de recuperação em desenvolvimento.')
+}
 
 const switchToRegister = () => {
-  isLogin.value = false;
+  isLogin.value = false
 }
 
 const switchToLogin = () => {
-  isLogin.value = true;
+  isLogin.value = true
 }
 </script>
+
 
 <style scoped>
 .fade-enter-active,
