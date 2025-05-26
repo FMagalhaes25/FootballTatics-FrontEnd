@@ -64,7 +64,8 @@
             </div>
             <div class="p-6">
               <p class="text-gray-600 dark:text-gray-300 mb-4">Crie e gerencie diferentes formações táticas para seu time.</p>
-              <button class="w-full px-4 py-2 bg-gray-100 dark:bg-[#252525] hover:bg-[#16A249] hover:text-white dark:hover:bg-[#16A249] text-gray-800 dark:text-white font-medium rounded-lg transition-colors group-hover:bg-[#16A249] group-hover:text-white">
+              <button class="w-full px-4 py-2 bg-gray-100 dark:bg-[#252525] hover:bg-[#16A249] hover:text-white dark:hover:bg-[#16A249] text-gray-800 dark:text-white font-medium rounded-lg transition-colors group-hover:bg-[#16A249] group-hover:text-white"
+               @click="$router.push('/formacoes')">
                 Acessar Formações
               </button>
             </div>
@@ -107,24 +108,13 @@
 
 <script setup>
 import { 
-  Trophy, 
-  Search, 
-  Bell, 
-  ChevronDown, 
   LayoutDashboard, 
   Users, 
   CalendarDays, 
   BarChart2, 
   Settings, 
-  Plus, 
   Newspaper, 
-  Gamepad2, 
-  Goal, 
-  ShieldAlert, 
-  UserPlus, 
-  ClipboardEdit, 
-  CalendarCheck, 
-  AlertTriangle 
+  Gamepad2
 } from 'lucide-vue-next';
 import { computed } from 'vue'
 import { useAuthStore } from '~/stores/auth'

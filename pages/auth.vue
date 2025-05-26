@@ -192,7 +192,7 @@ onMounted(() => {
   setInterval(nextQuote, 10000)
 })
 
-const handleLoginSuccess = (userData) => {
+const handleLoginSuccess = () => {
   toast.success('Login realizado com sucesso!')
 }
 
@@ -201,7 +201,7 @@ const handleLoginError = (error) => {
   console.error('Login error', error)
 }
 
-const handleRegisterSuccess = (userData) => {
+const handleRegisterSuccess = () => {
   toast.success('Cadastro realizado com sucesso! Faça login para continuar.')
   isLogin.value = true
 }
