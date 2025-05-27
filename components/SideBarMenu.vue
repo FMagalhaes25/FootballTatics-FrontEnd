@@ -55,7 +55,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useMediaQuery } from '@vueuse/core'
-import { ChevronLeft, LayoutDashboard, Users, Newspaper, NotebookPen, LogOut, User } from 'lucide-vue-next'
+import { ChevronLeft, LayoutDashboard, Users, Newspaper, NotebookPen, User } from 'lucide-vue-next'
 import LogoutButton from '~/components/perfil/LogoutButton.vue'
 
 const props = defineProps({
