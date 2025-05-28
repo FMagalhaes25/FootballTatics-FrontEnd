@@ -200,6 +200,7 @@ onMounted(async () => {
   try {
     const res = await fetch(`${config.public.API_URL}/formacoes/`);
     const data = await res.json();
+    console.log('Formações carregadas:', data);
     formations.value = data;
   } catch (err) {
     console.error('Erro ao carregar formações:', err);
